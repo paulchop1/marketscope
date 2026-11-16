@@ -1,6 +1,6 @@
 # MarketScope
 
-Projet d'apprentissage : un script Python qui récupère le prix actuel du BTC via l'API publique de Binance.
+Projet d'apprentissage : un script Python qui récupère les prix actuels de Bitcoin, Ethereum et Solana via l'API publique de Binance.
 Objectif à terme : collecter automatiquement des données crypto sur plusieurs exchanges et les stocker dans une base de données.
 
 ## Installation
@@ -14,11 +14,13 @@ pip install -r requirements.txt
 ## Utilisation
 
 ```bash
-python btc_price.py
+python crypto_prices.py
 ```
 
-Exemple de résultat (le prix change à chaque exécution) :
+Exemple de résultat (les prix changent à chaque exécution) :
 
 ```
-Prix du BTC : 64850.01 USDT
+Prix du BTCUSDT : 64954.01
+Prix du ETHUSDT : 1815.61
+Prix du SOLUSDT : 71.73
 ```
