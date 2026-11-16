@@ -1,7 +1,7 @@
 # MarketScope
 
-Projet d'apprentissage : un script Python qui récupère les prix actuels de Bitcoin, Ethereum et Solana via l'API publique de Binance.
-Objectif à terme : collecter automatiquement des données crypto sur plusieurs exchanges et les stocker dans une base de données.
+Projet d'apprentissage : un script Python qui récupère et enregistre dans une base de données SQLite les prix et les heures de relevé de Bitcoin, Ethereum et Solana via l'API publique de Binance.
+Objectif à terme : collecter automatiquement des données crypto sur plusieurs exchanges.
 
 ## Installation
 
@@ -9,6 +9,7 @@ Objectif à terme : collecter automatiquement des données crypto sur plusieurs 
 python3 -m venv .venv
 source .venv/bin/activate
 pip install -r requirements.txt
+python create_db.py
 ```
 
 ## Utilisation
@@ -17,10 +18,16 @@ pip install -r requirements.txt
 python crypto_prices.py
 ```
 
-Exemple de résultat (les prix changent à chaque exécution) :
+Exemple de résultat (les prix et la date changent à chaque exécution) :
 
 ```
-Prix du BTCUSDT : 64954.01
-Prix du ETHUSDT : 1815.61
-Prix du SOLUSDT : 71.73
+2026-11-16T21:48:54Z | BTCUSDT : 65323.39
+2026-11-16T21:48:55Z | ETHUSDT : 1829.05
+2026-11-16T21:48:55Z | SOLUSDT : 71.97
+```
+
+Pour consulter les prix enregistrés dans la base : 
+
+```bash
+sqlite3 marketscope.db "SELECT * FROM prices;"
 ```
