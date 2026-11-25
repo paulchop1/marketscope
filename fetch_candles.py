@@ -2,6 +2,13 @@ import requests
 import sqlite3
 import time
 from datetime import datetime, timezone
+import logging
+
+logging.basicConfig(
+    filename="marketscope.log",
+    level=logging.INFO,
+    format="%(asctime)s %(levelname)s %(message)s",
+)
 
 SYMBOLE = "BTCUSDT"
 INTERVALLE = "1h"
@@ -22,8 +29,12 @@ else:
 
 while True:
     url = f"https://api.binance.com/api/v3/klines?symbol={SYMBOLE}&interval={INTERVALLE}&limit=1000&startTime={debut}"
-    reponse = requests.get(url, timeout=10)
-    reponse.raise_for_status()
+    try:
+        reponse = requests.get(url, timeout=10)
+        reponse.raise_for_status()
+    except requests.exceptions.RequestException as erreur:
+        logging.error(f"Collecte {SYMBOLE} {INTERVALLE} interrompue : {erreur}")
+        break
     bougies = reponse.json()
 
     if len(bougies) == 0:
@@ -38,7 +49,7 @@ while True:
             ))
     connexion.commit()
 
-    print(f"Page reçue : {len(bougies)} bougies, total ajouté : {connexion.total_changes}")
+    logging.info(f"Page reçue : {len(bougies)} bougies, total ajouté : {connexion.total_changes}")
 
     if len(bougies) < 1000:
         break
@@ -47,5 +58,4 @@ while True:
     time.sleep(0.5)
 
 connexion.close()
-print("Collecte terminée")
-print("Collecte terminée")
+logging.info("Collecte terminée")
