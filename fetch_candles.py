@@ -12,6 +12,7 @@ logging.basicConfig(
 
 SYMBOLE = "BTCUSDT"
 INTERVALLE = "1h"
+DUREES = {"15m": 900000, "1h": 3600000, "1d": 86400000}
 
 maintenant = int(time.time() * 1000)
 
@@ -25,7 +26,7 @@ resultat = connexion.execute(requete_max, (SYMBOLE, INTERVALLE)).fetchone()
 if resultat[0] is None:
     debut = int(datetime(2023, 1, 1, tzinfo=timezone.utc).timestamp() * 1000)
 else:
-    debut = resultat[0] + 3600000
+    debut = resultat[0] + DUREES [INTERVALLE]
 
 while True:
     url = f"https://api.binance.com/api/v3/klines?symbol={SYMBOLE}&interval={INTERVALLE}&limit=1000&startTime={debut}"
@@ -59,3 +60,4 @@ while True:
 
 connexion.close()
 logging.info("Collecte terminée")
+
