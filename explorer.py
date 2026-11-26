@@ -1,5 +1,6 @@
 import sqlite3
 import pandas as pd
+import matplotlib.pyplot as plt
 
 connexion = sqlite3.connect("marketscope.db")
 
@@ -14,3 +15,7 @@ df["variation"] = ((df["close"] - df["open"]) / df["open"]) * 100
 print(df.shape)
 print(df[["date", "open", "close", "variation"]].head())
 print(df["variation"].describe())
+plt.plot(df["date"], df["close"])                  
+plt.title("BTCUSDT - clôture journalière (UTC)")  
+plt.ylabel("Prix (USDT)")                          
+plt.show()  
